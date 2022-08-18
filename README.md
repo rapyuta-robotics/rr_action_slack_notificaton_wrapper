@@ -7,22 +7,21 @@ This action is a workaround for this [open issue](https://github.com/slackapi/sl
 
 ### 1.1 Inputs (all mandatory)
 
-|Name|Description
--|-|-
+Name|Description
+-|-
 `template-input-path`|Path to JSON-formatted template file to fix
 `template-output-path`|Path to write the fixed template file
 `replacements`|A set of ad-hoc replacements for the template check [here](#13-replacements-explanation)
 
 ### 1.2 Outputs
 
-|Name|Description|
+Name|Description
 -|-|
 `template-output-path`|Re-exported path of the fixed template
 
 ### 1.3 Replacements explanation
 
-> :memo: **Note:** Github expressions can be used in every line of the 
-> replacements input
+> :memo: **Note:** Github expressions can be used in every line of the replacements input
 
 Given the following workflow step:
 
