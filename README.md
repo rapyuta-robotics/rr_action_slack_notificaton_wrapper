@@ -5,20 +5,13 @@ Slack template file fixer action
 
 This action is a workaround for this [open issue](https://github.com/slackapi/slack-github-action/issues/84) in the [slack-github-action](https://github.com/slackapi/slack-github-action), specifically when expanding context related variables in a template file.
 
-### 1.1 Inputs
+### 1.1 Inputs (all mandatory)
 
-|Name|Description|Optional
+|Name|Description
 -|-|-
-`template-input-path`|Path to JSON-formatted template file to fix|:x:
-`template-output-path`|Path to write the fixed template file|:x:
-`github-context`|Overwritable `github` context|:heavy_check_mark:
-`job-context`|Overwritable `job` context|:heavy_check_mark:
-`runner-context`|Overwritable `runner` context|:heavy_check_mark:
-`strategy-context`|Overwritable `strategy` context|:heavy_check_mark:
-`matrix-context`|Overwritable `matrix` context|:heavy_check_mark:
-`ad-hoc-replacements`|A set of ad-hoc replacements for the template check [here](#13-ad-hoc-replacements) |:heavy_check_mark:
-
-> :memo: **Note:** Each context is provided as a JSON string to the action by default, it can be overwriten with an arbitrary JSON string if needed
+`template-input-path`|Path to JSON-formatted template file to fix
+`template-output-path`|Path to write the fixed template file
+`replacements`|A set of ad-hoc replacements for the template check [here](#13-replacements-explanation)
 
 ### 1.2 Outputs
 
@@ -26,7 +19,10 @@ This action is a workaround for this [open issue](https://github.com/slackapi/sl
 -|-|
 `template-output-path`|Re-exported path of the fixed template
 
-### 1.3 Ad-hoc replacements
+### 1.3 Replacements explanation
+
+> :memo: **Note:** Github expressions can be used in every line of the 
+> replacements input
 
 Given the following workflow step:
 
@@ -36,7 +32,7 @@ Given the following workflow step:
   with:
     template-input-path: resources/examples.json
     template-output-path: resources/example_fixed.json
-    ad-hoc-replacements: |
+    replacements: |
       NOTIFICATION_HEADER=":warning: Failed"
       NOTIFICATION_FOOTER="See <www.example.com>"
       WRONG=See <www.example.com>

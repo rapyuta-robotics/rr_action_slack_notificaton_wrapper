@@ -2811,23 +2811,23 @@ const mappingFormat = /(.+?)="(.+?)"/;
 const run = async () => {
     const inputFile = core.getInput('template-input-path');
     const outputFile = core.getInput('template-output-path');
-    const replacements = core.getInput('replacements')
+    const replacements = core.getInput('replacements');
     let data = fs.readFileSync(path.resolve(inputFile), 'utf-8');
     let map = new Map();
     let regex = new RegExp(mappingFormat);
-    let lines = replacements.split('\n');
-    lines.forEach((replacement) => {
+    replacements.split('\n').forEach((replacement) => {
         let match = regex.exec(replacement);
         if (match && match.length == 3) {
             map.set(`%${match[1]}`, match[2]);
         } else {
-            core.warning(`Wrong format of ad-hoc replacement "${replacement}"`);
+            core.warning(`Wrong format of replacement "${replacement}"`);
         }
     });
+    let out = data;
     map.forEach((key, val) => {
-        data = data.replace(val, key);
+        out = out.replaceAll(val, key);
     });
-    fs.writeFileSync(path.resolve(outputFile), data);
+    fs.writeFileSync(path.resolve(outputFile), out);
     core.setOutput('template-output-path', outputFile);
 }
 
