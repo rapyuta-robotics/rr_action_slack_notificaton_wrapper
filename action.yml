@@ -1,0 +1,32 @@
+name: Awesome action
+description: Run an awesome action
+inputs:
+  template-input-path:
+    description: 'path to the payload template to fix'
+    required: true
+  template-output-path:
+    description: 'path of the fixed template'
+    required: true
+  github-context:
+    required: false
+    default: ${{ toJSON(github) }}
+  job-context:
+    required: false
+    default: ${{ toJSON(job) }}
+  runner-context:
+    required: false
+    default: ${{ toJSON(runner) }}
+  strategy-context:
+    required: false
+    default: ${{ toJSON(strategy) }}
+  matrix-context:
+    required: false
+    default: ${{ toJSON(matrix) }}
+  ad-hoc-replacements:
+    required: false
+outputs:
+  template-output-path:
+    description: 'path to JSON payload template to fix'
+runs:
+  using: node16
+  main: dist/index.js
