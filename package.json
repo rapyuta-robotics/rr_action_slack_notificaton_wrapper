@@ -12,8 +12,6 @@
     "@vercel/ncc": "^0.34.0"
   },
   "dependencies": {
-    "@actions/core": "^1.9.1",
-    "lodash": "^4.17.21",
-    "markup-js": "^1.5.21"
+    "@actions/core": "^1.9.1"
   }
 }

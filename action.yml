@@ -7,26 +7,12 @@ inputs:
   template-output-path:
     description: 'path of the fixed template'
     required: true
-  github-context:
-    required: false
-    default: ${{ toJSON(github) }}
-  job-context:
-    required: false
-    default: ${{ toJSON(job) }}
-  runner-context:
-    required: false
-    default: ${{ toJSON(runner) }}
-  strategy-context:
-    required: false
-    default: ${{ toJSON(strategy) }}
-  matrix-context:
-    required: false
-    default: ${{ toJSON(matrix) }}
-  ad-hoc-replacements:
-    required: false
+  replacements:
+    dectription: 'replacements to perform'
+    required: true
 outputs:
   template-output-path:
-    description: 'path to JSON payload template to fix'
+    description: 'path of the fixed template'
 runs:
   using: node16
   main: dist/index.js
