@@ -2815,9 +2815,10 @@ const run = async () => {
     let data = fs.readFileSync(path.resolve(inputFile), 'utf-8');
     let map = new Map();
     let regex = new RegExp(mappingFormat);
-    replacements.split('\n').forEach((replacement) => {
+    let lines = replacements.split('\n');
+    lines.forEach((replacement) => {
         let match = regex.exec(replacement);
-        if (match.length == 3) {
+        if (match && match.length == 3) {
             map.set(`%${match[1]}`, match[2]);
         } else {
             core.warning(`Wrong format of ad-hoc replacement "${replacement}"`);
