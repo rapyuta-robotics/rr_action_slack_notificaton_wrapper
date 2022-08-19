@@ -8,7 +8,7 @@ inputs:
     description: 'path of the fixed template'
     required: true
   replacements:
-    dectription: 'replacements to perform'
+    description: 'replacements to perform'
     required: true
 outputs:
   template-output-path:
