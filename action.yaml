@@ -29,7 +29,7 @@ runs:
         ${{ github.action_path }}/script.sh ${{ inputs.payload-file-path }} > ${{ inputs.payload-file-path }}.fixed
       shell: bash
       env:
-        REPL: ${{ input.replacements }}
+        REPL: ${{ inputs.replacements }}
     - name: Send Slack notification template
       if: ${{ inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
       id: slack-notification-template
