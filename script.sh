@@ -1,8 +1,9 @@
 #!/bin/bash
 
+echo $REPL
 IFS=$'\n'
-lines=($1)
-tmp=$(cat $2)
+lines=($REPL)
+tmp=$(cat $1)
 for l in "${lines[@]}"
 do
     key=$(echo $l | sed -e "s/\(.\+\)=\".\+\"/\1/g")
