@@ -32,14 +32,14 @@ runs:
         replacements: ${{ inputs.replacements }}
     - name: Send Slack notification template
       if: ${{ inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
-      id: slack-notification
+      id: slack-notification-template
       uses: slackapi/slack-github-action@v1.21.0
       with:
         channel-id: ${{ inputs.channel-id }}
         payload-file-path: ${{ steps.fix_template.outputs.template-output-path }}
     - name: Send Slack notification payload
       if: ${{ inputs.payload-file-path == '' && inputs.payload != '' }}
-      id: slack-notification
+      id: slack-notification-payload
       uses: slackapi/slack-github-action@v1.21.0
       with:
         channel-id: ${{ inputs.channel-id }}
