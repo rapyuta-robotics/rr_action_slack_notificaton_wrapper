@@ -26,7 +26,8 @@ runs:
       if: ${{ inputs.payload-file-path != '' }}
       id: fix_template
       run: |
-        ${{ github.action_path }}/script.sh "${{ inputs.replacements }}" ${{ inputs.payload-file-path }} > ${{ inputs.payload-file-path }}.fixed
+        echo "REPL=${{ inputs.replacements }}" >> $GITHUB_ENV
+        ${{ github.action_path }}/script.sh $REPL ${{ inputs.payload-file-path }} > ${{ inputs.payload-file-path }}.fixed
       shell: bash
     - name: Send Slack notification template
       if: ${{ inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
