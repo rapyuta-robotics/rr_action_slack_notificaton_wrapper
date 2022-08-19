@@ -29,14 +29,16 @@ runs:
         ${{ github.action_path }}/script.sh ${{ inputs.payload-file-path }}
       shell: bash
       env:
-        REPL: '${{ inputs.replacements }}'
+        REPL: ${{ inputs.replacements }}
     - name: Send Slack notification template
-      if: ${{ inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
+      if: ${{ inputs.payload-file-path != '' && steps.fix_template.outcome == 'success' }}
       id: slack-notification-template
       uses: slackapi/slack-github-action@v1.21.0
       with:
         channel-id: ${{ inputs.channel-id }}
         payload-file-path: ${{ steps.fix_template.outputs.template-output-path }}
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
     - name: Send Slack notification payload
       if: ${{ inputs.payload-file-path == '' && inputs.payload != '' }}
       id: slack-notification-payload
@@ -44,8 +46,10 @@ runs:
       with:
         channel-id: ${{ inputs.channel-id }}
         payload: ${{ inputs.payload }}
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
     - name: Clean temporal files
       id: clean
-      if: ${{ always() && inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
+      if: ${{ always() && inputs.payload-file-path != '' && steps.fix_template.outcome == 'success' }}
       run: rm ${{ inputs.payload-file-path }}.fixed
       shell: bash
