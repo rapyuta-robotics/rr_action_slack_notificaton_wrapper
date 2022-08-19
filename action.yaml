@@ -25,7 +25,7 @@ runs:
     - name: Fix Slack notification template
       if: ${{ inputs.payload-file-path != '' }}
       id: fix_template
-      uses: ${{ github.action_path }}/template_fixer
+      uses: ${{ github.action_path }}/script.sh
       with:
         template-input-path: ${{ inputs.payload-file-path }}
         template-output-path: ${{ inputs.payload-file-path }}.fixed
