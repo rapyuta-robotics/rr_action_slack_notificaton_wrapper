@@ -25,11 +25,9 @@ runs:
     - name: Fix Slack notification template
       if: ${{ inputs.payload-file-path != '' }}
       id: fix_template
-      uses: ${{ github.action_path }}/script.sh
-      with:
-        template-input-path: ${{ inputs.payload-file-path }}
-        template-output-path: ${{ inputs.payload-file-path }}.fixed
-        replacements: ${{ inputs.replacements }}
+      run: |
+        ${{ github.action_path }}/script.sh "${{ inputs.replacements }}" ${{ inputs.payload-file-path }} > ${{ inputs.payload-file-path }}.fixed
+      shell: bash
     - name: Send Slack notification template
       if: ${{ inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
       id: slack-notification-template
@@ -47,5 +45,5 @@ runs:
     - name: Clean temporal files
       id: clean
       if: ${{ always() && inputs.payload-file-path != '' && steps.conclusion.fix_template == 'success' }}
-      run: rm ${{ steps.fix_template.outputs.template-output-path }}
+      run: rm ${{ inputs.payload-file-path }}.fixed
       shell: bash
