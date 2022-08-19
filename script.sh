@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo $REPL
 IFS=$'\n'
 lines=($REPL)
 tmp=$(cat $1)
@@ -10,4 +9,4 @@ do
     val=$(echo $l | sed -e "s/.\+=\"\(.\+\)\"/\1/g")
     tmp=$(sed -e "s~%$key~$val~g" <<< $tmp)
 done
-echo "$tmp"
+echo "$tmp" > $1.fixed

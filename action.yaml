@@ -26,7 +26,7 @@ runs:
       if: ${{ inputs.payload-file-path != '' }}
       id: fix_template
       run: |
-        ${{ github.action_path }}/script.sh ${{ inputs.payload-file-path }} > ${{ inputs.payload-file-path }}.fixed
+        ${{ github.action_path }}/script.sh ${{ inputs.payload-file-path }}
       shell: bash
       env:
         REPL: '${{ inputs.replacements }}'
