@@ -1,0 +1,55 @@
+name: Awesome action
+description: Wraps the slack notification action
+inputs:
+  payload:
+    description: String payload to send
+    required: false
+    default: ''
+  payload-file-path:
+    description: Path to the template with the payload to send
+    required: false
+    default: ''
+  replacements:
+    description: Replacements to perform on the payload file
+    required: false
+    default: ''
+  channel-id:
+    description: Channel to send the notification to
+    required: true
+  slack-bot-token:
+    description: Access token to the Slack API
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Fix Slack notification template
+      if: ${{ inputs.payload-file-path != '' }}
+      id: fix_template
+      run: |
+        ${{ github.action_path }}/script.sh ${{ inputs.payload-file-path }}
+      shell: bash
+      env:
+        REPL: ${{ inputs.replacements }}
+    - name: Send Slack notification template
+      if: ${{ inputs.payload-file-path != '' && steps.fix_template.outcome == 'success' }}
+      id: slack-notification-template
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        channel-id: ${{ inputs.channel-id }}
+        payload-file-path: ${{ inputs.payload-file-path }}.fixed
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
+    - name: Send Slack notification payload
+      if: ${{ inputs.payload-file-path == '' && inputs.payload != '' }}
+      id: slack-notification-payload
+      uses: slackapi/slack-github-action@v1.21.0
+      with:
+        channel-id: ${{ inputs.channel-id }}
+        payload: ${{ inputs.payload }}
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
+    - name: Clean temporal files
+      id: clean
+      if: ${{ always() && inputs.payload-file-path != '' && steps.fix_template.outcome == 'success' }}
+      run: rm ${{ inputs.payload-file-path }}.fixed
+      shell: bash
