@@ -37,8 +37,8 @@ Given the following workflow step:
 ```
 
 > ### :memo: **Note:**
-> The input `replacements` may use any valid github action expression and it will be expanded to its corresponding valur before running the action; in this example, `${{ github.sha }}`
-> will be replaced by the commit sha before running e.g. `1a6184908f91b86ba226f4436a7b0323fbc2820b`
+> The input `replacements` may use any valid github action expression and they will be expanded to its corresponding values before running the replacement step; in this example, `${{ github.sha }}`
+> will be replaced by the commit sha before running the actual replacement.
 
 This action will perfom the following steps:
 
