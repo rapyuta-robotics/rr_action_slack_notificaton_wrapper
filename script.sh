@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 IFS=$'\n'
-lines=($REPL)
+lines=($(echo $REPL | grep -Po "[A-Za_z0-9-_]+=\".+?\""))
 tmp=$(cat $1)
 for l in "${lines[@]}"
 do
