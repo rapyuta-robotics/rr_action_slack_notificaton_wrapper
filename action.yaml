@@ -30,6 +30,12 @@ runs:
       shell: bash
       env:
         REPL: ${{ inputs.replacements }}
+    - name: Fix Slack notification template
+      if: ${{ inputs.payload-file-path != '' }}
+      id: show_template
+      run: |
+        cat ${{ inputs.payload-file-path }}.fixed
+      shell: bash
     - name: Send Slack notification template
       if: ${{ inputs.payload-file-path != '' && steps.fix_template.outcome == 'success' }}
       id: slack-notification-template
