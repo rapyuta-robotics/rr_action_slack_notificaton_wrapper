@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 IFS=$'\n'
-lines=($(echo $REPL))
+lines=($(echo -e $REPL))
 tmp=$(cat $1)
 for l in "${lines[@]}"
 do
